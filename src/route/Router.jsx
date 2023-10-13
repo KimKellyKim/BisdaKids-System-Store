@@ -1,16 +1,12 @@
 import { Route, Routes } from 'react-router-dom'; 
-import Users from '../pages/Users';
+import GameStore from '../pages/GameStore';
 
 function Router() {
 
   return (
     <>
       <Routes>  
-        {
-          <>
-            <Route path='/users' element={<Users />} />
-          </>
-        }
+          <Route path='/' element={<GameStore />} />
       </Routes>
     </>
   )
