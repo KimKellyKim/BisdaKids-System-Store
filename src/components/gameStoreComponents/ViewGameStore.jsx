@@ -151,11 +151,15 @@ function ViewGameStore(checker) {
         }
       }
     }
+    else {
+      setErrorText('No username added. Please try again.')
+      setErrorModal(true)
+    }
     setOpen(false)
   }
 
   return (
-    <div className="h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center">
       {loading ? (
         <Loading />
       ) : (     
@@ -234,7 +238,7 @@ function ViewGameStore(checker) {
                       onChange={(e) => setUsername(e.target.value)}
                     />
                     <Button variant="contained" onClick={handleBuy}>
-                      BUY
+                      PROCEED TO GCASH PAYMENT
                     </Button>
                   </div>
                 </form>
