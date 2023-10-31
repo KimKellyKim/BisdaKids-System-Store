@@ -19,10 +19,10 @@ const style = {
   p: 4,
 }
 
-function ViewGameStore({ checker, setChecker }) {
+function ViewGameStore(checker) {
   const [loading, setLoading] = useState(false)
   const [gameStoreData, setGameStoreData] = useState([])
-  const [itemNames, setItemNames] = useState({})
+  const setItemNames = useState({})
   const [open, setOpen] = useState(false)
   const [selectedItemData, setSelectedItemData] = useState(null)
   const [username, setUsername] = useState('')
@@ -54,7 +54,7 @@ function ViewGameStore({ checker, setChecker }) {
           const itemInfo = await supabase
             .from('items')
             .select('item_image_url')
-            .eq('item_id', storeData.item_id)
+            .eq('item_name', storeData.item_name)
             .single()
 
           if (itemInfo.error) {
@@ -175,7 +175,7 @@ function ViewGameStore({ checker, setChecker }) {
             </div>
             <div className="p-4">
               <h5 className="text-xl font-semibold text-gray-900">
-                {itemNames[data.item_id] || 'Item Not Found'}
+                {data.item_name || 'Item Not Found'}
               </h5>
               <p className="text-gray-600">Php {data.price}</p>
               <p className="mt-2 text-gray-800">
@@ -210,16 +210,13 @@ function ViewGameStore({ checker, setChecker }) {
               {selectedItemData && (
                 <form className="flex flex-col p-4">
                   <div className="flex flex-col gap-4">
-                    <label className="text-lg font-semibold" htmlFor="image">
-                        Image:
-                      </label>
-                      <img
-                        src={selectedItemData.item_image_url}
-                        alt="Item"
-                        className="w-30 h-20 object-contain"
-                      />
+                    <img
+                      src={selectedItemData.item_image_url}
+                      alt="Item"
+                      className="w-30 h-20 object-contain"
+                    />
                     <label className="text-lg font-semibold" htmlFor="itemName">
-                      Item Name: {itemNames[selectedItemData.item_id] || 'Item Not Found'}
+                      Item Name: {selectedItemData.item_name || 'Item Not Found'}
                     </label>
                     <label className="text-lg font-semibold" htmlFor="itemDesc">
                       Quantity: {selectedItemData.offer_quantity}
