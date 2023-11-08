@@ -41,7 +41,7 @@ function PaymentTransactions({ itemData, username, itemNames, onPurchaseSuccess 
         setPaymentStatus('failure')
       }
     } catch (error) {
-      console.error('An error occurred:', error)
+      console.error('An error occurred: ', error)
       setPaymentStatus('failure')
     }
   };
@@ -51,7 +51,7 @@ function PaymentTransactions({ itemData, username, itemNames, onPurchaseSuccess 
     <div className="container">
       <div className="row">
         <div className="col-md-12 order-md-1" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          <form className="needs-validation flex flex-col p-4" onSubmit={handleFormSubmit}>
+          <form className="needs-validation flex flex-col p-4" action='http://localhost/BisdaKids-System-Store/backend/paymongo.php' method='GET'>
             <div className="flex flex-col gap-4">
               <img
                 src={item_image_url}
@@ -60,25 +60,26 @@ function PaymentTransactions({ itemData, username, itemNames, onPurchaseSuccess 
               />
               <div>
                 <label htmlFor="price">Price: </label>
-                <input type="text" className="form-control" name="price" value={price} readOnly/>
+                <input type="text" className="form-control" id='price' name="price" value={price} />
               </div>
               <div>
                 <label htmlFor="quantity">Quantity: </label>
-                <input className="form-control" name="quantity" value={offer_quantity} readOnly/>
+                <input className="form-control" id='quantity' name="quantity" value={offer_quantity} />
               </div>
               <div>
                 <label htmlFor="itemName">Item Name: </label>
-                <input className="form-control" name="itemName" value={itemName} readOnly/>
+                <input className="form-control" id='itemName' name="itemName" value={itemName} />
               </div>
               <div>
                 <label htmlFor="username">Username: </label>
-                <input className="form-control" name="username" value={username} readOnly/>
+                <input className="form-control" id='username' name="username" value={username} />
               </div>
               <div className="mb-3">
                 <label htmlFor="mobile">Mobile</label>
                 <input
                   type="tel"
                   className="form-control"
+                  id='mobile'
                   name="mobile"
                   value={mobile}
                   onChange={(e) => setMobile(e.target.value)}
@@ -93,6 +94,7 @@ function PaymentTransactions({ itemData, username, itemNames, onPurchaseSuccess 
                 <input
                   type="email"
                   className="form-control"
+                  id='email'
                   name="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

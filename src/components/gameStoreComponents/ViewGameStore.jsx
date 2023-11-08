@@ -156,10 +156,10 @@
           <Loading />
         ) : (     
           <div className="w-4/6 max-w-screen-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {gameStoreData.map(data => (
+          {gameStoreData.map((data, index) => (
             <a
               onClick={() => handleOpen(data)}
-              key={data.id}
+              key={index}
               className="container bg-teal-100 hover:shadow-xl hover:shadow-orange-00 cursor-pointer rounded-lg overflow-hidden transition-transform transform hover:scale-105 flex flex-col items-center p-4 m-3"
             >
               <div className="h-48 w-max flex items-center justify-center">
