@@ -34,26 +34,26 @@ function sendPaymentRequest() {
         ]
     ];
 
-    $jsonData = json_encode($source);
+    $jsonData = json_encode($source)
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $ch = curl_init($url)
+    curl_setopt($ch, CURLOPT_POST, 1)
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData)
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'))
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true)
 
     // disable SSL verification
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false)
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false)
 
     $result = curl_exec($ch);
-    $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE); // Get the HTTP status code
+    $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE) // Get the HTTP status code
 
     if ($httpStatus === 200) {
-        echo "Payment request successful";
+        echo "Payment request successful"
     } else {
-        echo "Payment request failed with HTTP status: " . $httpStatus;
+        echo "Payment request failed with HTTP status: " . $httpStatus
     }
 }
 
-sendPaymentRequest();
+sendPaymentRequest()
