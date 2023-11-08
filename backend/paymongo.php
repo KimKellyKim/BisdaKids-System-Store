@@ -12,8 +12,8 @@ if (
     $url = "https://api4wrd-v1.kpa.ph/paymongo/v1/create";
 
     $redirect = [
-        "success" => "/backend/success.php",
-        "failed" => "/backend/failed.php"
+        "success" => "http://localhost/BisdaKids-System-Store/backend/success.php",
+        "failed" => "http://localhost/BisdaKids-System-Store/backend/failed.php"
     ];
 
     $billing = [
