@@ -6,7 +6,7 @@
   import Button from '@mui/material/Button'
   import Typography from '@mui/material/Typography'
   import Modal from '@mui/material/Modal'
-  import PaymentTransactions from "../../pages/PaymentTransactions"
+  
 
   const style = {
     position: 'absolute',
@@ -126,7 +126,6 @@
         return null
       }
     }
-
     const handleBuy = async () => {
       if (selectedItemData && username) {
         const user_id = await fetchUserIdByUsername(username);
@@ -136,7 +135,8 @@
   
           if (store_offer_id !== null) {
             // If the store_offer_id is not null, proceed to purchase
-            setShowPaymentModal(true); // Set the state to show the PaymentTransaction modal
+            //setShowPaymentModal(true); // Set the state to show the PaymentTransaction modal
+            window.location.href = 'http://localhost/BisdaKids-System-Store/backend/index.php';
           } else {
             setErrorText('Store offer not found. Please try again later.');
             setErrorModal(true);
@@ -204,21 +204,22 @@
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
               <div className="py-2">
                 {selectedItemData && (
-                  <form className="flex flex-col p-4">
+                  <form id="dataForm" className="flex flex-col p-4" method="POST" action="http://localhost/BisdaKids-System-Store/backend/index.php">
                     <div className="flex flex-col gap-4">
                       <img
+                        name = "image"
                         src={selectedItemData.item_image_url}
                         alt="Item"
                         className="w-30 h-20 object-contain"
                       />
                       <label className="text-lg font-semibold" htmlFor="itemName">
-                        Item Name: {itemNames[selectedItemData.item_id] || 'Item Not Found'}
+                      Item Name: <input type="text" name="itemName" value={itemNames[selectedItemData.item_id] || 'Item Not Found'} readOnly/>
                       </label>
-                      <label className="text-lg font-semibold" htmlFor="itemDesc">
-                        Quantity: {selectedItemData.offer_quantity}
+                      <label className="text-lg font-semibold" htmlFor="quantity">
+                      Quantity: <input type="text" name="quantity" value={selectedItemData.offer_quantity} readOnly/>
                       </label>
                       <label className="text-lg font-semibold" htmlFor="itemPrice">
-                        Total Price: Php {selectedItemData.price}
+                      Total Price: Php <input name="price" type="text" value={selectedItemData.price} /> 
                       </label>
                       <label htmlFor="bundleQuan" className="text-lg font-semibold">
                         Username:
@@ -226,6 +227,7 @@
                       <input
                         className="outline-none border-2 focus-border-gray-400 rounded-md text-center p-1"
                         type="text"
+                        name="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                       />
@@ -238,48 +240,7 @@
               </div>
             </Typography>
           </Box>
-        </Modal>
-        {/* Conditionally render the PaymentTransaction modal */}
-      {showPaymentModal && (
-        <Modal
-          open={showPaymentModal}
-          onClose={() => setShowPaymentModal(false)} // Close the PaymentTransaction modal
-          aria-labelledby="payment-modal-title"
-          aria-describedby="payment-modal-description"
-        >
-          <Box sx={style}>
-            <button
-              onClick={() => setShowPaymentModal(false)} // Close the PaymentTransaction modal
-              type="button"
-              className="absolute top-4 right-5 text-3xl p-1 rounded-full hover-bg-gray-400 duration-150"
-            >
-              <AiOutlineCloseCircle />
-            </button>
-            <Typography id="payment-modal-title">
-              <div className="text-2xl font-bold text-center text-blue-500">
-                GCASH PAYMENT
-              </div>
-            </Typography>
-            <Typography id="payment-modal-description" sx={{ mt: 2 }}>
-              <div className="py-2">
-                {selectedItemData && (
-                  <PaymentTransactions
-                    itemData={selectedItemData}
-                    username={username}
-                    itemNames={itemNames} 
-                    onPurchaseSuccess={() => {
-                      // Handle successful purchase here
-                      setSuccessText("Purchase Successful");
-                      setSuccessModal(true);
-                      setShowPaymentModal(false); // Close the PaymentTransaction modal
-                    }}
-                  />
-                )}
-              </div>
-            </Typography>
-          </Box>
-        </Modal>
-      )}
+        </Modal>    
         {errorModal && (
           <div className="fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40">
             <div className="flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md">
