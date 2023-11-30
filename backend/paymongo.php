@@ -45,14 +45,6 @@ $source = [
     ]
 ];
 
-$transactionData = [
-    'user_id' => $user_id,
-    'item_id' => $item_id,
-    'quantity' => $quantity,
-    'price' => $price
-];
-
-$insertedTransactionId = insertTransaction($transactionData);
 
 $jsonData = json_encode($source);
 

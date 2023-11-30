@@ -18,6 +18,8 @@
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    overflowY:'auto',
+    maxHeight:'90vh'
   }
 
   function ViewGameStore(checker) {
@@ -27,6 +29,7 @@
     const [open, setOpen] = useState(false)
     const [selectedItemData, setSelectedItemData] = useState(null)
     const [username, setUsername] = useState('')
+    const [password,setPassword] = useState('')
     const [errorModal, setErrorModal] = useState(false)
     const [errorText, setErrorText] = useState('')
     const [successModal, setSuccessModal] = useState(false)
@@ -130,14 +133,24 @@
     }
     
     const handleBuy = async () => {
-      if (selectedItemData && username) {
+      if (selectedItemData && username && password) {
         const user_id = await fetchUserIdByUsername(username);
     
         if (user_id !== null) {
-          const store_offer_id = selectedItemData.id;
+          // Check username and password
+          const { data: user } = await supabase
+            .from('user_account')
+            .select('user_id')
+            .eq('user_name', username)
+            .eq('user_password', password)
+            .single();
     
-          if (store_offer_id !== null) {
-            const form = document.createElement('form');
+          if (user) {
+            // Proceed to payment
+            const store_offer_id = selectedItemData.id;
+    
+            if (store_offer_id !== null) {
+              const form = document.createElement('form');
             form.method = 'POST';
             form.action = 'http://localhost/BisdaKids-System-Store/backend/index.php';
     
@@ -175,19 +188,23 @@
     
             document.body.appendChild(form);
             form.submit();
+            } else {
+              setErrorText('Store offer not found. Please try again later.');
+              setErrorModal(true);
+              console.error('Store offer not found');
+            }
           } else {
-            setErrorText('Store offer not found. Please try again later.');
+            setErrorText('Invalid username or password. Please try again.');
             setErrorModal(true);
-            console.error('Store offer not found');
+            console.error('Invalid username or password');
           }
         }
       } else {
-        setErrorText('No username added. Please try again.');
+        setErrorText('No username or password added. Please try again.');
         setErrorModal(true);
       }
       setOpen(false);
     };
-    
 
     return (
       <div className="flex items-center justify-center">
@@ -222,64 +239,106 @@
         </div>  
         )}
         <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <button
-              onClick={handleClose}
-              type="button"
-              className="absolute top-4 right-5 text-3xl p-1 rounded-full hover-bg-gray-400 duration-150"
-            >
-              <AiOutlineCloseCircle />
-            </button>
-            <Typography id="modal-modal-title">
-              <div className="text-2xl font-bold text-center text-green-500">
-                Purchase
-              </div>
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <div className="py-2">
-                {selectedItemData && (
-                  <form id="dataForm" className="flex flex-col p-4" method="POST" action="http://localhost/BisdaKids-System-Store/backend/index.php">
-                    <div className="flex flex-col gap-4">
-                      <img
-                        name = "image"
-                        src={selectedItemData.item_image_url}
-                        alt="Item"
-                        className="w-30 h-20 object-contain"
-                      />
-                      <label className="text-lg font-semibold" htmlFor="itemName">
-                      Item Name: <input type="text" name="itemName" value={itemNames[selectedItemData.item_id] || 'Item Not Found'} readOnly/>
-                      </label>
-                      <label className="text-lg font-semibold" htmlFor="quantity">
-                      Quantity: <input type="text" name="quantity" value={selectedItemData.offer_quantity} readOnly/>
-                      </label>
-                      <label className="text-lg font-semibold" htmlFor="itemPrice">
-                      Total Price: Php <input name="price" type="text" value={selectedItemData.price} /> 
-                      </label>
-                      <label htmlFor="bundleQuan" className="text-lg font-semibold">
-                        Username:
-                      </label>
-                      <input
-                        className="outline-none border-2 focus-border-gray-400 rounded-md text-center p-1"
-                        type="text"
-                        name="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                      />
-                      <Button variant="contained" onClick={handleBuy}>
-                        PROCEED TO GCASH PAYMENT
-                      </Button>
-                    </div>
-                  </form>
-                )}
-              </div>
-            </Typography>
-          </Box>
-        </Modal>    
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="modal-modal-title"
+  aria-describedby="modal-modal-description"
+>
+  <Box sx={style} className="p-6 bg-white rounded-md max-w-md mx-auto">
+    <button
+      onClick={handleClose}
+      type="button"
+      className="absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150"
+    >
+      <AiOutlineCloseCircle />
+    </button>
+    <Typography id="modal-modal-title">
+      <div className="text-2xl font-bold text-center text-green-500">
+        Purchase
+      </div>
+    </Typography>
+    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+      <div className="py-2">
+        {selectedItemData && (
+          <form
+            id="dataForm"
+            className="flex flex-col p-4"
+            method="POST"
+            action="http://localhost/BisdaKids-System-Store/backend/index.php"
+          >
+            <div className="flex flex-col gap-4">
+              <img
+                name="image"
+                src={selectedItemData.item_image_url}
+                alt="Item"
+                className="w-30 h-20 object-contain mx-auto"
+              />
+              <label className="text-lg font-semibold" htmlFor="itemName">
+                Item Name:{' '}
+                <input
+                  type="text"
+                  name="itemName"
+                  value={itemNames[selectedItemData.item_id] || 'Item Not Found'}
+                  readOnly
+                  className="border-2 rounded-md p-1"
+                />
+              </label>
+              <label className="text-lg font-semibold" htmlFor="quantity">
+                Quantity:{' '}
+                <input
+                  type="text"
+                  name="quantity"
+                  value={selectedItemData.offer_quantity}
+                  readOnly
+                  className="border-2 rounded-md p-1"
+                />
+              </label>
+              <label className="text-lg font-semibold" htmlFor="itemPrice">
+                Total Price: Php{' '}
+                <input
+                  name="price"
+                  type="text"
+                  value={selectedItemData.price}
+                  className="border-2 rounded-md p-1"
+                />
+              </label>
+              <label htmlFor="bundleQuan" className="text-lg font-semibold">
+                Username:
+              </label>
+              <input
+                className="outline-none border-2 focus:border-gray-400 rounded-md text-center p-1"
+                type="text"
+                name="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <label htmlFor="password" className="text-lg font-semibold">
+                Password:
+              </label>
+              <input
+                className="outline-none border-2 focus:border-gray-400 rounded-md text-center p-1"
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleBuy}
+                className="mt-4"
+              >
+                PROCEED TO GCASH PAYMENT
+              </Button>
+            </div>
+          </form>
+        )}
+      </div>
+    </Typography>
+  </Box>
+</Modal>
+
         {errorModal && (
           <div className="fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40">
             <div className="flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md">
