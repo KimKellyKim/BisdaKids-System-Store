@@ -48,13 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                     <div class="mb-3">
                         <label for="email">Mobile</label>
-                        <input type="number" class="form-control" name="mobile" value="639171234567">
-                        <div class="invalid-feedback"> Please enter a valid mobile number for shipping updates. </div>
+                        <input type="number" class="form-control" name="mobile" required>
                     </div>
                     <div class="mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" value="kingpauloaquino@gmail.com">
-                        <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                        <input type="email" class="form-control" name="email" required>
                     </div>
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Send Payment</button>
