@@ -89,6 +89,8 @@
         data.forEach(item => {
           itemNamesMap[item.item_id] = item.item_name
         })
+        console.log('Item Names:', itemNamesMap); 
+
         setItemNames(itemNamesMap)
       } else {
         setErrorText('Failed to fetch item names. Please try again later.')
@@ -126,17 +128,53 @@
         return null
       }
     }
+    
     const handleBuy = async () => {
       if (selectedItemData && username) {
         const user_id = await fetchUserIdByUsername(username);
-  
+    
         if (user_id !== null) {
           const store_offer_id = selectedItemData.id;
-  
+    
           if (store_offer_id !== null) {
-            // If the store_offer_id is not null, proceed to purchase
-            //setShowPaymentModal(true); // Set the state to show the PaymentTransaction modal
-            window.location.href = 'http://localhost/BisdaKids-System-Store/backend/index.php';
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'http://localhost/BisdaKids-System-Store/backend/index.php';
+    
+            // Add hidden input fields for the data you want to pass
+            const usernameField = document.createElement('input');
+            usernameField.type = 'hidden';
+            usernameField.name = 'username';
+            usernameField.value = username;
+            form.appendChild(usernameField);
+    
+            const itemDataField = document.createElement('input');
+            itemDataField.type = 'hidden';
+            itemDataField.name = 'item_data';
+            itemDataField.value = JSON.stringify(selectedItemData);
+            form.appendChild(itemDataField);
+
+            const itemNameField = document.createElement('input');
+            itemNameField.type = 'hidden';
+            itemNameField.name = 'itemName';
+            itemNameField.value = itemNames[selectedItemData.item_id] || 'Item Not Found'; // Make sure this line is correct
+            form.appendChild(itemNameField);
+
+            /* const itemQuantityField = document.createElement('input');
+            itemQuantityField.type = 'hidden';
+            itemQuantityField.name = 'quantity';
+            itemQuantityField.value = JSON.stringify(selectedItemData);
+            form.appendChild(itemQuantityField);
+    
+            const itemPriceField = document.createElement('input');
+            itemPriceField.type = 'hidden';
+            itemPriceField.name = 'price';
+            itemPriceField.value = JSON.stringify(selectedItemData);
+            form.appendChild(itemPriceField) */
+            // Add other fields as needed
+    
+            document.body.appendChild(form);
+            form.submit();
           } else {
             setErrorText('Store offer not found. Please try again later.');
             setErrorModal(true);
@@ -148,7 +186,8 @@
         setErrorModal(true);
       }
       setOpen(false);
-    }
+    };
+    
 
     return (
       <div className="flex items-center justify-center">
@@ -159,7 +198,7 @@
           {gameStoreData.map((data, index) => (
             <a
               onClick={() => handleOpen(data)}
-              key={index}
+              key={index} 
               className="container bg-teal-100 hover:shadow-xl hover:shadow-orange-00 cursor-pointer rounded-lg overflow-hidden transition-transform transform hover:scale-105 flex flex-col items-center p-4 m-3"
             >
               <div className="h-48 w-max flex items-center justify-center">
