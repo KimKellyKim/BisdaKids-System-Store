@@ -3,22 +3,22 @@
 $url = "https://api4wrd-v1.kpa.ph/paymongo/v1/create"; // you will need an app_key, get it from -> https://api4wrd.kpa.ph/register
 
 $redirect = [
-    "success" => "http://localhost/BisdaKids-System-Store/backend/success.php",
-    "failed" => "http://localhost/BisdaKids-System-Store/backend/failed.php"
+    "success" => "http://localhost:8080/BisdaKids-System-Store/backend/success.php",
+    "failed" => "http://localhost:8080/BisdaKids-System-Store/backend/failed.php"
 ];
 
 $billing = [
-    "email" => $_GET["email"],
-    "name" =>  $_GET["firstName"] . " " .  $_GET["lastName"],
+    "email" => "dwight.eyac20@gmail.com",
+    "name" =>  $_GET["user_name"],
     "phone" =>  $_GET["mobile"],
     "price" => $_GET["price"],
     "address" => [
-        "line1" =>  $_GET["address"],
-        "line2" =>  $_GET["address2"],
-        "city" =>  $_GET["city"],
-        "state" =>  $_GET["state"],
-        "postal_code" =>  $_GET["zip"],
-        "country" =>  $_GET["country"]
+        "line1" =>  "noaddress",
+        "line2" =>  "noaddress",
+        "city" =>  "noaddress",
+        "state" =>  "noaddress",
+        "postal_code" =>  "6000",
+        "country" =>  "PH"
     ]
 ];
 

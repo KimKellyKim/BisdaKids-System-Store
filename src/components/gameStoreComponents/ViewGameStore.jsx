@@ -152,7 +152,7 @@
             if (store_offer_id !== null) {
               const form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'http://localhost/BisdaKids-System-Store/backend/index.php';
+            form.action = 'http://localhost:8080/BisdaKids-System-Store/backend/index.php';
     
             // Add hidden input fields for the data you want to pass
             const usernameField = document.createElement('input');
@@ -218,6 +218,7 @@
               key={index} 
               className="container bg-teal-100 hover:shadow-xl hover:shadow-orange-00 cursor-pointer rounded-lg overflow-hidden transition-transform transform hover:scale-105 flex flex-col items-center p-4 m-3"
             >
+            {data.store_offer_id}
               <div className="h-48 w-max flex items-center justify-center">
                 <img
                   className="max-h-full"
@@ -273,6 +274,14 @@
                 alt="Item"
                 className="w-30 h-20 object-contain mx-auto"
               />
+              {/* store id */}
+              <input
+                  type="hidden"
+                  name="store_offer_id"
+                  value={selectedItemData.store_offer_id || 'Item Not Found'}
+                  readOnly
+                  className="border-2 rounded-md p-1"
+                />
               <label className="text-lg font-semibold" htmlFor="itemName">
                 Item Name:{' '}
                 <input

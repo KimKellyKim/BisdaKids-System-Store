@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $item_id = $itemData['item_id'];
     $price = $itemData['price'];
     $quantity = $itemData['offer_quantity'];
+    $store_offer_id = $itemData['store_offer_id'];
     // Access other data as needed
     ?>
     <html>
@@ -29,10 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="row">
             <div class="col-md-12 order-md-1"><br><br>
                 <h4 class="mb-3">Billing address</h4>
-                <form class="needs-validation" method="GET" action="paymongo.php">
+                <form class="needs-validation" method="POST" action="get-data.php">
                     <div class="mb-3">
                         <label for="firstName">Username</label>
-                        <input type="text" class="form-control" name="firstName" value="<?php echo htmlspecialchars($username); ?>" readonly>
+                        <input type="text" class="form-control" name="user_name" value="<?php echo htmlspecialchars($username); ?>" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="store_offer_id">Store Offer Id</label>
+                        <input type="text" class="form-control" name="store_offer_id" value="<?php echo htmlspecialchars($store_offer_id); ?>" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="itemName">Item</label>
@@ -51,11 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <input type="number" class="form-control" name="mobile" value="639171234567">
                         <div class="invalid-feedback"> Please enter a valid mobile number for shipping updates. </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" value="kingpauloaquino@gmail.com">
-                        <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
-                    </div>
+                    
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit">Send Payment</button>
                 </form>
