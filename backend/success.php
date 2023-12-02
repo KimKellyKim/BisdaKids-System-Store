@@ -37,8 +37,24 @@ INSERT INTO system_transactions
 VALUES ($store_offer_id, $user_id, '$paymongo_id');
 PGQUERY;
 $result = pg_query($dbconnect, $query);
-print_r($result);
 
+$query = <<<PGQUERY
+SELECT item_id 
+FROM system_store 
+WHERE store_offer_id = $store_offer_id;
+PGQUERY;
+$result = pg_query($dbconnect, $query);
+$row = pg_fetch_assoc($result);
+$item_id = $row['item_id'];
+
+$query = <<<PGQUERY
+INSERT INTO 
+user_inventory (user_id, item_id, quantity)
+VALUES ($user_id, $item_id, $quantity)
+ON CONFLICT (user_id, item_id)
+DO UPDATE SET quantity = user_inventory.quantity + EXCLUDED.quantity;
+PGQUERY;
+$result = pg_query($dbconnect, $query);
 
 if (isset($_GET['ukayra_id'])) {
     echo "UkayraID: " . $_GET['ukayra_id'] . "<br />";

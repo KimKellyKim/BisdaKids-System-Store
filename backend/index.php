@@ -53,7 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                     <div class="mb-3">
                         <label for="email">Mobile</label>
-                        <input type="number" class="form-control" name="mobile" required>
+                        <input type="number" class="form-control" name="mobile" placeholder="0999999999">
+                        <div class="invalid-feedback"> Please enter a valid mobile number for shipping updates. </div>
                     </div>
                     
                     <hr class="mb-4">
