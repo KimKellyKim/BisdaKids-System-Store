@@ -51,7 +51,7 @@ function PaymentTransactions({ itemData, username, itemNames, onPurchaseSuccess 
     <div className="container">
       <div className="row">
         <div className="col-md-12 order-md-1" style={{ maxHeight: '80vh', overflowY: 'auto' }}>
-          <form className="needs-validation flex flex-col p-4" action='http://localhost:8080/BisdaKids-System-Store/backend/paymongo.php' method='GET'>
+          <form className="needs-validation flex flex-col p-4" action='http://localhost/BisdaKids-System-Store/backend/paymongo.php' method='GET'>
             <div className="flex flex-col gap-4">
               <img
                 src={item_image_url}

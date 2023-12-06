@@ -3,8 +3,8 @@
 $url = "https://api4wrd-v1.kpa.ph/paymongo/v1/create"; // you will need an app_key, get it from -> https://api4wrd.kpa.ph/register
 
 $redirect = [
-    "success" => "http://localhost:8080/BisdaKids-System-Store/backend/success.php",
-    "failed" => "http://localhost:8080/BisdaKids-System-Store/backend/failed.php"
+    "success" => "http://localhost/BisdaKids-System-Store/backend/success.php",
+    "failed" => "http://localhost/BisdaKids-System-Store/backend/failed.php"
 ];
 
 $billing = [

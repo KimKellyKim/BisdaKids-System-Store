@@ -96,7 +96,7 @@
 
         setItemNames(itemNamesMap)
       } else {
-        setErrorText('Failed to fetch item names. Please try again later.')
+        setErrorText('Failed to fetch item names. Please check your internet connection and try again later.')
         setErrorModal(true)
       }
       error && console.error(error)
@@ -152,7 +152,7 @@
             if (store_offer_id !== null) {
               const form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'http://localhost:8080/BisdaKids-System-Store/backend/index.php';
+            form.action = 'http://localhost/BisdaKids-System-Store/backend/index.php';
     
             // Add hidden input fields for the data you want to pass
             const usernameField = document.createElement('input');
@@ -211,15 +211,15 @@
         {loading ? (
           <Loading />
         ) : (     
-          <div className="w-4/6 max-w-screen-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="w-4/6 max-w-screen-xl grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 items-center">
           {gameStoreData.map((data, index) => (
             <a
               onClick={() => handleOpen(data)}
               key={index} 
               className="container bg-teal-100 hover:shadow-xl hover:shadow-orange-00 cursor-pointer rounded-lg overflow-hidden transition-transform transform hover:scale-105 flex flex-col items-center p-4 m-3"
             >
-            {data.store_offer_id}
-              <div className="h-48 w-max flex items-center justify-center">
+            <p className="hidden">{data.store_offer_id}</p>
+              <div className="h-24 w-max flex items-center justify-center">
                 <img
                   className="max-h-full"
                   src={data.item_image_url}
@@ -227,13 +227,15 @@
                 />
               </div>
               <div className="p-4">
-                <h5 className="text-xl font-semibold text-gray-900">
+                <h5 className="text-3xl font-semibold text-yellow-500 capitalize">
                   {itemNames[data.item_id] || 'Item Not Found'}
                 </h5>
-                <p className="text-gray-600">Php {data.price}</p>
-                <p className="mt-2 text-gray-800">
-                  Quantity: {data.offer_quantity}
+              </div>
+              <div className="p-4">
+                <p className="text-2xl text-blue-900 font-medium">
+                  Php {data.price}
                 </p>
+                <p className="text-gray-600">Quantity: {data.offer_quantity}</p>
               </div>
             </a>
           ))}
@@ -267,7 +269,7 @@
             method="POST"
             action="http://localhost/BisdaKids-System-Store/backend/index.php"
           >
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-column gap-4">
               <img
                 name="image"
                 src={selectedItemData.item_image_url}
@@ -280,35 +282,36 @@
                   name="store_offer_id"
                   value={selectedItemData.store_offer_id || 'Item Not Found'}
                   readOnly
-                  className="border-2 rounded-md p-1"
+                  className="p-1"
                 />
               <label className="text-lg font-semibold" htmlFor="itemName">
-                Item Name:{' '}
+                Item Name
                 <input
                   type="text"
                   name="itemName"
                   value={itemNames[selectedItemData.item_id] || 'Item Not Found'}
                   readOnly
-                  className="border-2 rounded-md p-1"
+                  className="border-2 rounded-md p-1 text-center"
                 />
               </label>
               <label className="text-lg font-semibold" htmlFor="quantity">
-                Quantity:{' '}
+                Quantity
                 <input
                   type="text"
                   name="quantity"
                   value={selectedItemData.offer_quantity}
                   readOnly
-                  className="border-2 rounded-md p-1"
+                  className="border-2 rounded-md p-1 text-center"
                 />
               </label>
               <label className="text-lg font-semibold" htmlFor="itemPrice">
-                Total Price: Php{' '}
+                Total Price
                 <input
                   name="price"
                   type="text"
-                  value={selectedItemData.price}
-                  className="border-2 rounded-md p-1"
+                  value={`Php ${selectedItemData.price}`}
+                  readOnly
+                  className="border-2 rounded-md p-1 text-center"
                 />
               </label>
               <label htmlFor="bundleQuan" className="text-lg font-semibold">
@@ -350,10 +353,10 @@
 
         {errorModal && (
           <div className="fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40">
-            <div className="flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md">
+            <div className="relative flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md">
               <h1 className="text-4xl font-bold text-red-500">{errorText}</h1>
               <button
-                className="p-1 hover-bg-red-500 rounded-full duration-150"
+                className="absolute top-2 right-2 p-1 hover-bg-red-500 rounded-full duration-150"
                 type="button"
                 onClick={() => setErrorModal(false)}
               >

@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 //functions, for separation of logic lang
 function removeDecimalDigits($price) {
     $newPrice = floor($price / 100);
@@ -57,7 +60,7 @@ PGQUERY;
 $result = pg_query($dbconnect, $query);
 
 if (isset($_GET['ukayra_id'])) {
-    echo "UkayraID: " . $_GET['ukayra_id'] . "<br />";
+    /* echo "UkayraID: " . $_GET['ukayra_id'] . "<br />";
 
     if (isset($_GET['paymongo_id'])) {
         echo "PaymongoID: " . $_GET['paymongo_id'] . "<br />";
@@ -69,10 +72,70 @@ if (isset($_GET['ukayra_id'])) {
 
     if (isset($_GET['message'])) {
         echo "Error Message: " . $_GET['message'];
-    }
+    } */
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Success</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: #f8f9fa;
+            }
+            .container {
+                max-width: 500px;
+                margin-top: 50px;
+            }
+            .card {
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            .card-header {
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 10px 10px 0 0;
+            }
+            .form-control {
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Payment Successful!</h4>
+                </div>
+                <div class="card-body">
+                    <label>Ukayra ID:</label>
+                    <input type="text" name="id" value="<?php echo $_GET['ukayra_id'];?>" readonly><br>
+                    <label>Paymongo ID:</label>
+                    <input type="text" style="width: 70%;" name="pay_id" value="<?php echo $_GET['paymongo_id'];?>" readonly><br>
+                    <label>Method:</label>
+                    <input type="text" name="method" value="<?php echo $_GET['method'];?>" readonly><br><br>
+                
+                    <a href="http://localhost:5173/" class="btn btn-primary btn-block">Back to Main</a>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+    </html>
+    <?php
 } else {
-    echo "Success Page";
+    ?>
+    <html>
+        <div>
+            <h1>Server Error</h1>
+        </div>
+    </html>
+    //echo "Success Page";
+    <?php
 }
-
-
-echo "<a href='/'>Back to main</a>";
+?>

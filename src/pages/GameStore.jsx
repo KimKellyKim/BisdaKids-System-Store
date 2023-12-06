@@ -19,33 +19,33 @@ function GameStore() {
           autoPlay={true}
           interval={2000} // 2-second interval
         >         
-            <img className="h-96"
+            <img className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/Main%20Menu.png"
               alt="Main Menu"
             />     
-            <img className="h-96"
+            <img className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/image%2021.png"
               alt="Map"
             />
-            <img className="h-96"
+            <img className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/Level%201%20Tutorial.png"
               alt="Tutorial"
             />
             <img
-              className="h-96"
+              className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/Victory.png"
               alt="Victory"
             />
-            <img className="h-96"
+            <img className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/Level%205%20Boss%20Stage.png"
               alt="Boss Stage"
             />
-            <img className="h-96"
+            <img className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/Shops.png"
               alt="Shops"
             />
             <img
-              className="h-96"
+              className="h-98"
               src="https://nsnoztviefjxvptztmnj.supabase.co/storage/v1/object/public/item_pics/background/image%2014.png"
               alt="Daily Task"
             />
