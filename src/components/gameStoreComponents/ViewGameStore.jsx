@@ -152,7 +152,7 @@
             if (store_offer_id !== null) {
               const form = document.createElement('form');
             form.method = 'POST';
-            form.action = 'http://localhost/BisdaKids-System-Store/backend/index.php';
+            form.action = 'http://localhost:8080/BisdaKids-System-Store/backend/index.php';
     
             // Add hidden input fields for the data you want to pass
             const usernameField = document.createElement('input');
@@ -267,7 +267,7 @@
             id="dataForm"
             className="flex flex-col p-4"
             method="POST"
-            action="http://localhost/BisdaKids-System-Store/backend/index.php"
+            action="http://localhost:8080/BisdaKids-System-Store/backend/index.php"
           >
             <div className="flex flex-column gap-4">
               <img

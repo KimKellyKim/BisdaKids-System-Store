@@ -118,7 +118,7 @@ if (isset($_GET['ukayra_id'])) {
                     <label>Method:</label>
                     <input type="text" name="method" value="<?php echo $_GET['method'];?>" readonly><br><br>
                 
-                    <a href="http://localhost:5173/" class="btn btn-primary btn-block">Back to Main</a>
+                    <a href="http://192.168.56.1:5173/" class="btn btn-primary btn-block">Back to Main</a>
                 </div>
             </div>
         </div>
@@ -135,7 +135,6 @@ if (isset($_GET['ukayra_id'])) {
             <h1>Server Error</h1>
         </div>
     </html>
-    //echo "Success Page";
     <?php
 }
 ?>
